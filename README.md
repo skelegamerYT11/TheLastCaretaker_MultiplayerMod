@@ -35,4 +35,4 @@ The mod syncs player coordinates and door states between two clients using UE4SS
 I may release further updates to improve stability, add item sync, or refine the avatar movement. Keep an eye on this repository!
 
 ---
-*Created by the community, for the community.*
+*Vibecoded with love ❤️ by MrSkele & Antigravity AI*
