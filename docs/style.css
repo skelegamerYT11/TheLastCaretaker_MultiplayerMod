@@ -1,0 +1,311 @@
+:root {
+    --bg-color: #0b0c10;
+    --card-bg: rgba(22, 24, 30, 0.7);
+    --text-primary: #e0e6ed;
+    --text-secondary: #8b9bb4;
+    --accent-color: #fca311;
+    --accent-glow: rgba(252, 163, 17, 0.4);
+    --border-color: rgba(252, 163, 17, 0.2);
+    --danger-color: #ef233c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Sci-Fi Background Pattern */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: 
+        radial-gradient(circle at 15% 50%, rgba(252, 163, 17, 0.05), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(252, 163, 17, 0.05), transparent 25%);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.2) 2px, rgba(0, 0, 0, 0.2) 4px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(180deg, rgba(11, 12, 16, 0) 0%, rgba(22, 24, 30, 0.8) 100%);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 15px var(--accent-glow);
+    margin-bottom: 0.5rem;
+}
+
+.hero h2 {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+}
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 red;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 blue;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(20px, 9999px, 85px, 0); }
+    20% { clip: rect(65px, 9999px, 11px, 0); }
+    40% { clip: rect(43px, 9999px, 5px, 0); }
+    60% { clip: rect(10px, 9999px, 99px, 0); }
+    80% { clip: rect(87px, 9999px, 42px, 0); }
+    100% { clip: rect(50px, 9999px, 15px, 0); }
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 10px inset var(--accent-glow);
+}
+
+.primary-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.secondary-btn {
+    background-color: rgba(139, 155, 180, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--text-secondary);
+}
+
+.secondary-btn:hover {
+    background-color: rgba(139, 155, 180, 0.3);
+}
+
+/* Layout Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: var(--border-color);
+}
+
+.card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Image Spotlight */
+.spotlight {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+}
+
+.demo-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: contrast(1.1) brightness(0.9);
+}
+
+.scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to bottom, transparent, rgba(252, 163, 17, 0.3), transparent);
+    animation: scan 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scan {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+.caption {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Lists */
+.feature-list {
+    list-style: none;
+}
+
+.feature-list li {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+}
+
+.feature-list .icon {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.warning-card h3 {
+    color: var(--danger-color);
+    border-color: rgba(239, 35, 60, 0.3);
+}
+.warning-card:hover {
+    border-color: rgba(239, 35, 60, 0.5);
+}
+
+.install-steps {
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.install-steps li {
+    margin-bottom: 0.8rem;
+}
+
+.install-steps li::marker {
+    color: var(--accent-color);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+}
+
+code {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #a4b5cc;
+}
+
+/* Message from Creator */
+.message-card {
+    background: linear-gradient(135deg, rgba(252, 163, 17, 0.1) 0%, rgba(22, 24, 30, 0.8) 100%);
+    border-left: 4px solid var(--accent-color);
+}
+
+.message-card p {
+    font-style: italic;
+    font-size: 1.05rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}

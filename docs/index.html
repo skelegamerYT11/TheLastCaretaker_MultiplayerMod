@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Caretaker - Multiplayer Mod</title>
+    <meta name="description" content="An experimental multiplayer sync mod for The Last Caretaker. Play co-op with your friends!">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="glitch" data-text="THE LAST CARETAKER">THE LAST CARETAKER</h1>
+            <h2>Unofficial Multiplayer Mod (Early Access)</h2>
+            <p>Bringing co-op survival to the desolate facility. A proof-of-concept mod to show the developers the true potential of multiplayer.</p>
+            <a href="https://github.com" class="btn primary-btn">View on GitHub</a>
+            <a href="https://www.nexusmods.com/thelastcaretaker/mods/4" target="_blank" class="btn secondary-btn">Get UE4SS on Nexus</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card spotlight">
+            <h3>📸 See it in Action</h3>
+            <div class="image-wrapper">
+                <img src="demo.png" alt="Multiplayer Demonstration" class="demo-image">
+                <div class="scanline"></div>
+            </div>
+            <p class="caption">Player avatars synchronized in real-time across two separate game clients.</p>
+        </section>
+
+        <div class="grid-2">
+            <section class="card">
+                <h3>✨ Features & Current State</h3>
+                <ul class="feature-list">
+                    <li><span class="icon">🏃</span> <strong>Real-time Tracking:</strong> See the other player moving around in your world.</li>
+                    <li><span class="icon">🚪</span> <strong>Door Synchronization:</strong> Open and close doors together. (Ensure you slide them to the very end of their track for proper network sync).</li>
+                    <li><span class="icon">🛡️</span> <strong>Stability Focused:</strong> Stripped down to essential features to prevent memory crashes.</li>
+                </ul>
+            </section>
+
+            <section class="card warning-card">
+                <h3>⚠️ Limitations & Known Issues</h3>
+                <ul class="feature-list">
+                    <li><span class="icon">🎒</span> <strong>No Item Sync:</strong> Dropping and picking up items is currently disabled to prevent severe engine crashes.</li>
+                    <li><span class="icon">👻</span> <strong>Animation Desync:</strong> The avatar currently slides to match coordinates rather than playing full walking animations.</li>
+                    <li><span class="icon">🐛</span> <strong>Experimental:</strong> You might encounter occasional bugs, though recent tests have been very stable.</li>
+                </ul>
+            </section>
+        </div>
+
+        <section class="card">
+            <h3>⚙️ Requirements & Installation</h3>
+            <p><strong>Tested Game Version:</strong> <code>v.0.8.0.612251</code> (Early Access)</p>
+            <ol class="install-steps">
+                <li>Download the latest release from the GitHub repository.</li>
+                <li>Download the specific UE4SS build from the <a href="https://www.nexusmods.com/thelastcaretaker/mods/4" target="_blank">Nexus Mods page</a>.</li>
+                <li>Extract the <code>ue4ss</code> folder into your game's binary directory: <br><code>\The Last Caretaker (Early Access)\Voyage\Voyage\Binaries\Win64\</code></li>
+                <li>Run the <code>Avvia_Connessione.bat</code> script on both computers to bridge the network.</li>
+                <li>Launch the game and find your friend!</li>
+            </ol>
+        </section>
+
+        <section class="card message-card">
+            <h3>💌 A Message to the Developers</h3>
+            <p>This mod was built purely out of love for the game. Exploring the facility with a friend completely transforms the experience. I created this proof-of-concept to demonstrate that the community is hungry for a native co-op mode. I hope this inspires the official development team to consider adding official multiplayer support in the future!</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created by the community, for the community. Not affiliated with the official developers.</p>
+    </footer>
+</body>
+</html>
