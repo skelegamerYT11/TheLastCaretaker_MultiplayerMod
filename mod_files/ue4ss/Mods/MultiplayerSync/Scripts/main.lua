@@ -1,6 +1,6 @@
 local UEHelpers = require("UEHelpers")
 
-print("[MultiplayerSync] Mod riavviata con Hook di Rete!\n")
+print("[MultiplayerSync] Mod restarted with Network Hooks!\n")
 
 local DummyActor = nil
 local lastSyncX = 0
@@ -9,10 +9,10 @@ local lastSyncZ = 0
 local lastSyncYaw = 0
 local lastSpawnAttempt = 0
 
--- ESTRAZIONE E INIEZIONE CONTINUA (10 FPS)
+-- CONTINUOUS EXTRACTION AND INJECTION (10 FPS)
 LoopAsync(100, function()
     ExecuteInGameThread(function()
-        -- 1. ESTRAZIONE PROPRIE COORDINATE -> coords_out.txt
+        -- 1. EXTRACT OWN COORDINATES -> coords_out.txt
         pcall(function()
             local PC = UEHelpers.GetPlayerController()
             if PC and PC:IsValid() then
@@ -26,7 +26,7 @@ LoopAsync(100, function()
                         local z = loc.Z or loc.z or 0
                         local yaw = rot and (rot.Yaw or rot.yaw or 0) or 0
                         
-                        -- Solo se c'è un movimento reale (risparmia CPU e scritture disco)
+                        -- Only if there is real movement (saves CPU and disk writes)
                         if x ~= lastSyncX or y ~= lastSyncY or z ~= lastSyncZ or yaw ~= lastSyncYaw then
                             lastSyncX = x
                             lastSyncY = y
@@ -44,7 +44,7 @@ LoopAsync(100, function()
             end
         end)
 
-        -- 2. LETTURA COORDINATE AMICO -> Applicazione
+        -- 2. READ FRIEND COORDINATES -> Apply
         pcall(function()
             local file = io.open("coords_in.txt", "r")
             if file then
@@ -69,11 +69,11 @@ LoopAsync(100, function()
                                         lastSpawnAttempt = os.time()
                                         local World = PC:GetWorld()
                                         if World and World:IsValid() then
-                                            print("[MultiplayerSync] Genero l'Avatar dell'Amico!\n")
-                                            local spawnLoc = {X = x, Y = y, Z = z + 50} -- Alzato leggermente per non incastrarsi
+                                            print("[MultiplayerSync] Spawning Friend's Avatar!\n")
+                                            local spawnLoc = {X = x, Y = y, Z = z + 50} -- Raised slightly to avoid getting stuck
                                             local spawnRot = {Pitch = 0, Yaw = yaw, Roll = 0}
                                             
-                                            -- Sintassi corretta per UE4SS
+                                            -- Correct syntax for UE4SS
                                             DummyActor = World:SpawnActor(myPawn:GetClass(), spawnLoc, spawnRot)
                                         end
                                     end
@@ -103,31 +103,31 @@ LoopAsync(100, function()
         end)
 local lastReceivedDoorStates = {}
 
-        -- 3. LETTURA EVENTI (PORTE) DAL TUO AMICO
+        -- 3. READ EVENTS (DOORS) FROM FRIEND
         pcall(function()
             local file = io.open("event_in.txt", "r")
             if file then
                 local data = file:read("*a")
                 file:close()
-                -- Svuota il file IMMEDIATAMENTE per evitare loop di crash se c'è un errore
+                -- Clear file IMMEDIATELY to prevent crash loops on errors
                 io.open("event_in.txt", "w"):close()
                 
                 if data and data ~= "" then
                     for line in data:gmatch("[^\r\n]+") do
-                        -- Parsing a 4 blocchi per supportare future estensioni
+                        -- 4-block parsing to support future extensions
                         local evType, evP1, evP2, evP3 = string.match(line, "([^,]+),([^,]+),([^,]*),?(.*)")
                         
                         if evType == "DOOR" and evP1 then
                             local stateInt = tonumber(evP2)
-                            -- Previene il rimbalzo infinito (loop) se lo stato è identico all'ultimo ricevuto
+                            -- Prevent infinite bounce (loop) if state is identical to last received
                             if stateInt and lastReceivedDoorStates[evP1] ~= stateInt then
                                 lastReceivedDoorStates[evP1] = stateInt
-                                print("[MULTIPLAYER] Sincronizzo la porta nel tuo mondo: " .. evP1 .. " -> " .. tostring(stateInt) .. "\n")
+                                print("[MULTIPLAYER] Syncing door in your world: " .. evP1 .. " -> " .. tostring(stateInt) .. "\n")
                                 local doors = FindAllOf("VoyageDoorActor")
                                 if doors then
                                     for _, d in pairs(doors) do
                                         if d:IsValid() and d:GetFName():ToString() == evP1 then
-                                            -- Dobbiamo aggiornare la mente del gioco OLTRE alla visuale
+                                            -- Must update game logic BESIDES visual state
                                             pcall(function()
                                                 d.DoorStateDesired = stateInt
                                                 d.DoorState = stateInt
@@ -151,11 +151,11 @@ local lastReceivedDoorStates = {}
 end)
 
 local lastSentDoorStates = {}
--- SISTEMA DI INTERCETTAZIONE (HACKING MULTIPLO)
-print("Tentativo di registrazione Hook Multipli (Fase 2)...\n")
+-- INTERCEPTION SYSTEM (MULTIPLE HOOKING)
+print("Attempting to register Multiple Hooks (Phase 2)...\n")
 pcall(function()
     
-    -- HOOK SPECIFICO PER LO STATO
+    -- STATE SPECIFIC HOOK
     RegisterHook("/Script/Voyage.VoyageDoorActor:SetDoorState", function(Context, StateParam)
         pcall(function()
             local obj = Context:get()
@@ -168,11 +168,11 @@ pcall(function()
                     pcall(function() stateVal = obj.DoorState end)
                 end
                 
-                -- Previene l'invio multiplo
+                -- Prevent multiple sending
                 if lastSentDoorStates[doorName] ~= stateVal then
                     lastSentDoorStates[doorName] = stateVal
                     
-                    print("[EVENTO RETE] Hai toccato la porta: " .. doorName .. " -> " .. tostring(stateVal) .. "\n")
+                    print("[NETWORK EVENT] You touched the door: " .. doorName .. " -> " .. tostring(stateVal) .. "\n")
                     
                     local file = io.open("event_out.txt", "a")
                     if file then
@@ -184,5 +184,5 @@ pcall(function()
         end)
     end)
 
-    print("Hook Multipli Registrati con successo (No Crash)!\n")
+    print("Multiple Hooks successfully registered (No Crash)!\n")
 end)

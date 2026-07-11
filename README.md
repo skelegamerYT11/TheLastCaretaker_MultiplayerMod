@@ -25,11 +25,11 @@ The mod syncs player coordinates and door states between two clients using UE4SS
 ## 🚀 Installation & Usage
 1. Download and extract this repository.
 2. Place the `ue4ss` folder inside your game's binary directory: `\The Last Caretaker (Early Access)\Voyage\Voyage\Binaries\Win64\`
-3. Run the `Avvia_Connessione.bat` (or your PowerShell sync script) on both PCs to bridge the network connection between the two clients.
+3. Run the `Start_Connection.bat` (or your PowerShell sync script) on both PCs to bridge the network connection between the two clients.
 4. Launch the game. If you did everything correctly, you'll see the other player's avatar load into your world!
 
 ## 📸 Demonstration
-![Multiplayer Demo](demo.png)
+![Multiplayer Demo](https://imgur.com/ocv3iwW.png)
 
 ## 🔮 Future Updates
 I may release further updates to improve stability, add item sync, or refine the avatar movement. Keep an eye on this repository!
